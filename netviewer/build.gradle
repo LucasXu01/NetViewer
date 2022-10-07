@@ -1,6 +1,9 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'com.vanniktech.maven.publish'
+// Kotlin Javadoc，非必须。如果有这个插件，发布时会生成 Javadoc，会延长发布时间。建议在 snapshot 阶段关闭
+    id 'org.jetbrains.dokka'
 }
 
 android {

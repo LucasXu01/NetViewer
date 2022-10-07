@@ -13,32 +13,36 @@ import kotlin.concurrent.thread
 @SuppressLint("StaticFieldLeak")
 object NetViewerHelper {
 
-    const val TAG = "NetViewerHelper"
+    private const val TAG = "NetViewerHelper"
+    private var monitorDataInterface: MonitorDataInterface? = null
     var context: Context? = null
-    var port = 0
+    private var port = 0
+    var isPrintNetLog = true         // 是否直接打印网络日志
+    var isOpenMonitor = true
 
     //有从来ASM修改字节码对OKHTTP进行hook用的
     val hookInterceptors = listOf(
         MonitorInterceptor(),
     )
 
-    var isOpenMonitor = true
-
-
     fun init(context: Context) {
         NetViewerHelper.context = context
         thread {
             val propertiesData = MonitorProperties().paramsProperties()
+            // 此处可在配置文件中设置多个配置项，如：port
             port = propertiesData?.port?.toInt() ?: 0
         }
     }
 
-
-    fun dealMonitorData(monitorData: MonitorData) {
-        Log.d(TAG, "dealMonitorData: " + GsonHelper.toJson(monitorData) )
+    fun setMonitorDataInterface(monitorDataInterface: MonitorDataInterface) {
+        this.monitorDataInterface = monitorDataInterface
     }
 
-
-
+    fun dealMonitorData(monitorData: MonitorData) {
+        if (isPrintNetLog) {
+            Log.d(TAG, "dealMonitorData: " + GsonHelper.toJson(monitorData))
+        }
+        monitorDataInterface?.getMonitorData(monitorData)
+    }
 
 }
