@@ -1,6 +1,5 @@
+**一款用于展示应用所有网络请求参数的工具！[NetViewer-让App的网络请求无所遁形](https://blog.csdn.net/LucasXu01/article/details/127205948)**
 
-一款用于展示应用所有网络请求参数的工具！
-NetViewer-让App的网络请求无所遁形：[https://blog.csdn.net/LucasXu01/article/details/127205948](https://blog.csdn.net/LucasXu01/article/details/127205948)
 ## 1、netviewer接入
 
 项目级的build.gradle添加：
@@ -10,7 +9,7 @@ buildscript {
     dependencies {
     ......
         //1、依赖抓包插件库
-        classpath 'io.github.lucasxu01:modular-netviewer-plugin:1.0.0'
+        classpath 'io.github.lucasxu01:modular-netviewer-plugin:1.0.1'
 
     }
 }
@@ -51,6 +50,14 @@ debugImplementation 'implementation 'io.github.lucasxu01:modular-netviewer:1.0.0
      })
    ```
 
+3. 不展示log日志：
+
+   ```kotlin
+   NetViewerHelper.isPrintNetLog = false
+   ```
+
+   
+
 ## 3、效果
 
 <img src="https://img-blog.csdnimg.cn/96898f8f89054880b2eeda398cba560a.png" style="zoom:50%;" />
@@ -65,8 +72,16 @@ debugImplementation 'implementation 'io.github.lucasxu01:modular-netviewer:1.0.0
 ```
 ~~~
 
-## 5、 todo
+## 5、 温馨提示
+```
+    虽然netviewer只会在debug环境hook代码，
+    但是release版编译的时候还是会走一遍Transform操作（空操作），
+    为了保险起见建议生产包禁掉此插件。
+    在local.properties中添加monitor.enablePlugin=false，全面禁用monitor插件
+```
+
+## 6、 todo
 
 - [ ] 添加配置文件能力
-- [ ] 配置文件添加日志打印与否，插件禁用与否
+- [x] 配置文件添加日志打印与否，插件禁用与否
 
